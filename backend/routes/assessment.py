@@ -4,7 +4,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 
 from extensions import db
 from models import AssessmentResult
-from scoring import score_assessment, build_recommendations, build_insight_summary
+from scoring import score_assessment, build_recommendations
 
 assessment_bp = Blueprint("assessment", __name__, url_prefix="/api/assessment")
 
@@ -39,7 +39,7 @@ def submit():
     return jsonify({
         "assessment": record.to_dict(),
         "recommendations": recommendations,
-        "insight_summary": build_insight_summary(result),
+        
     }), 201
 
 
@@ -52,15 +52,13 @@ def latest():
         .order_by(AssessmentResult.created_at.desc())
         .first()
     )
-    if not record:
-        return jsonify({"assessment": None, "recommendations": [], "insight_summary": None}), 200
+    
 
     record_dict = record.to_dict()
     recommendations = build_recommendations(record_dict)
     return jsonify({
         "assessment": record_dict,
         "recommendations": recommendations,
-        "insight_summary": build_insight_summary(record_dict),
     }), 200
 
 

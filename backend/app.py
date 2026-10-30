@@ -10,7 +10,6 @@ from extensions import db, bcrypt, jwt
 from routes.auth import auth_bp
 from routes.assessment import assessment_bp
 from routes.progress import progress_bp
-from routes.insights import insights_bp
 
 
 def create_app():
@@ -25,7 +24,7 @@ def create_app():
     app.register_blueprint(auth_bp)
     app.register_blueprint(assessment_bp)
     app.register_blueprint(progress_bp)
-    app.register_blueprint(insights_bp)
+    
 
     @app.get("/api/health")
     def health():

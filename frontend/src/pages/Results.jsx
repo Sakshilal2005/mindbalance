@@ -95,15 +95,7 @@ export default function Results() {
         </div>
       </div>
 
-      {data.insight_summary && (
-        <div className="card ai-box">
-          <div className="ai-icon"><Bot size={20} color="var(--primary)" /></div>
-          <div>
-            <div className="ai-title">AI Insight (NLP Analysis)</div>
-            <p>{data.insight_summary}</p>
-          </div>
-        </div>
-      )}
+      
 
       <style>{`
         .results-grid { display: grid; grid-template-columns: 300px 1fr; gap: 16px; margin-bottom: 16px; }

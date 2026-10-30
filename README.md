@@ -5,7 +5,7 @@ computed wellness score + personalized recommendations, log daily screen
 time/sleep to see progress charts, and write journal notes that are analyzed
 for sentiment/topics/suggestions by the **Claude API**.
 
-- **Backend:** Flask + SQLAlchemy (SQLite) + JWT auth + Anthropic SDK
+
 - **Frontend:** React (Vite) + React Router + Recharts + Axios
 
 ---
@@ -18,12 +18,8 @@ python3 -m venv venv
 source venv/bin/activate        # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 
-cp .env.example .env
-# then edit .env and paste your real Anthropic API key into ANTHROPIC_API_KEY
 ```
 
-Get a Claude API key at https://console.anthropic.com/ (this powers the
-**AI Insights** journal analysis feature — every other page works without it).
 
 Run the server:
 
@@ -57,8 +53,6 @@ headaches during development.
 4. Check **Recommendations** — tips generated from your specific risk levels.
 5. Log daily screen time & sleep hours on the **Progress** page to build up
    a 7-day trend chart.
-6. Write a short note on the **AI Insights** page — it's sent to Claude,
-   which returns sentiment, key topics, and a suggestion, all shown live.
 
 ## 4. How the scoring works
 
@@ -84,7 +78,7 @@ mindbalance/
 │       ├── auth.py         # /api/auth/register, /login, /me
 │       ├── assessment.py   # /api/assessment/submit, /latest, /history
 │       ├── progress.py     # /api/progress/log, /weekly
-│       └── insights.py     # /api/insights/analyze (Claude API), /history
+│       
 └── frontend/
     └── src/
         ├── api/client.js       # axios instance with JWT interceptor
@@ -97,7 +91,7 @@ mindbalance/
             ├── Results.jsx
             ├── Recommendations.jsx
             ├── Progress.jsx
-            └── Insights.jsx
+            
 ```
 
 ## 6. For your project report
@@ -106,7 +100,6 @@ Good things to mention:
 - **Auth:** bcrypt password hashing + JWT bearer tokens (7-day expiry).
 - **Persistence:** SQLite via SQLAlchemy ORM, one row per assessment
   submission so score history is kept (not just overwritten).
-- **AI integration:** real call to Anthropic's Claude API with a strict
   JSON-only system prompt, parsed and stored server-side.
 - **Possible extensions:** deploy backend on Render/Railway, frontend on
   Vercel/Netlify, switch SQLite → PostgreSQL, add password reset via email,

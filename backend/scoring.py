@@ -82,9 +82,7 @@ def score_assessment(answers: dict) -> dict:
     }
 
 
-def build_insight_summary(result: dict) -> str:
-    """A short rule-based summary shown on the Results page (separate from the
-    Claude-powered journal analysis on the Insights page)."""
+
     parts = []
 
     if result["phone_risk_score"] >= 67:

@@ -15,10 +15,7 @@ export default function Insights() {
   const [analyzing, setAnalyzing] = useState(false)
   const [error, setError] = useState('')
 
-  const load = () => {
-    client.get('/insights/history').then((res) => setEntries(res.data.entries)).finally(() => setLoading(false))
-  }
-  useEffect(load, [])
+
 
   const submit = async (e) => {
     e.preventDefault()
@@ -57,7 +54,6 @@ export default function Insights() {
         />
         {error && <div className="error-text">{error}</div>}
         <button className="btn btn-primary" type="submit" disabled={analyzing || !text.trim()}>
-          {analyzing ? <span className="spinner" /> : 'Analyze with AI'}
         </button>
       </form>
 
@@ -70,18 +66,8 @@ export default function Insights() {
             <p>{latest.text}</p>
           </div>
 
-          <div className="insights-grid">
-            <div className="card">
-              <h3>Sentiment Analysis</h3>
-              <div className="sentiment-row" style={{ background: sUi.bg }}>
-                <sUi.icon size={22} color={sUi.color} />
-                <div>
-                  <div style={{ color: sUi.color, fontWeight: 800 }}>{latest.sentiment}</div>
-                  <div className="muted">Detected from your recent note</div>
-                </div>
-              </div>
-            </div>
-
+      
+           <div>
             <div className="card">
               <h3>Key Topics Detected</h3>
               <div className="topic-tags">
@@ -126,8 +112,6 @@ export default function Insights() {
         .journal-form textarea:focus { border-color: var(--primary); }
         .note-card { display: flex; gap: 10px; margin-bottom: 16px; }
         .note-card p { margin: 0; font-style: italic; color: var(--ink-soft); line-height: 1.6; }
-        .insights-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
-        .insights-grid h3 { margin: 0 0 12px; font-size: 15px; }
         .sentiment-row { display: flex; align-items: center; gap: 12px; border-radius: var(--radius-sm); padding: 14px; }
         .muted { font-size: 12px; color: var(--ink-faint); }
         .topic-tags { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -139,7 +123,6 @@ export default function Insights() {
         .history-list { display: flex; flex-direction: column; gap: 10px; }
         .history-row { display: flex; align-items: center; gap: 10px; font-size: 13.5px; }
         .history-text { color: var(--ink-soft); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        @media (max-width: 800px) { .insights-grid { grid-template-columns: 1fr; } }
       `}</style>
     </div>
   )
