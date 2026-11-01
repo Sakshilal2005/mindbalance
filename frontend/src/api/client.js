@@ -1,23 +1,39 @@
 import axios from 'axios'
 
-const client = axios.create({ baseURL: '/api' })
+// API URL for local and live deployment
+const API_BASE_URL = import.meta.env.VITE_API_URL?.trim()
 
+const client = axios.create({
+  baseURL: API_BASE_URL
+    ? `${API_BASE_URL.replace(/\/$/, '')}/api`
+    : '/api'
+})
+
+// Attach JWT token to every request
 client.interceptors.request.use((config) => {
   const token = localStorage.getItem('mb_token')
-  if (token) config.headers.Authorization = `Bearer ${token}`
+
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`
+  }
+
   return config
 })
 
+// Handle API responses and authentication errors
 client.interceptors.response.use(
   (res) => res,
+
   (err) => {
     if (err.response?.status === 401) {
       localStorage.removeItem('mb_token')
       localStorage.removeItem('mb_user')
+
       if (!window.location.pathname.startsWith('/login')) {
         window.location.href = '/login'
       }
     }
+
     return Promise.reject(err)
   }
 )
